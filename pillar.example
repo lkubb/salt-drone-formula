@@ -9,60 +9,110 @@ drone:
       # When applying `clean` states, also remove application data.
       # Setting this to true might incur accidental data loss!
     remove_all_data_for_sure: false
+   # Drone server configuration
+   # https://docs.drone.io/server/reference/
+   # For all values, you can suffix them with _pillar and specify a
+   # path for pillar.get to retrieve the value from. This avoids
+   # cache writes of secrets.
   config:
+      # Bitbucket OAuth config
     bitbucket:
       client_id: null
       client_secret: null
       debug: null
     cleanup:
+        # Configures the interval after which a pending job will be killed
+        # by the reaper. The default value is 24 hours.
       deadline_pending: null
+        # Configures the interval after which a running job will be killed
+        # by the reaper. The default value is 24 hours
       deadline_running: null
+        # The reaper finds and kills zombie jobs that are permanently stuck
+        # in a pending or running state. Set this to false to disable it.
       disabled: null
+        # Configures the interval at which the reaper is run. The default is
+        # 24h. You can set it eg to 60m to run it every hour.
       interval: null
     convert_plugin:
+        # Configures the endpoint for the conversion plugin, used to automatically
+        # convert or modify configuration files
       endpoint: null
+        # Configures the file extension that should be used with the conversion plugin.
+        # This configuration parameter is used to reduce unnecessary traffic to the
+        # conversion plugin for file types that will not otherwise be converted.
       extension: null
+        # The conversion plugin uses the shared secret to verify request authenticity.
       secret: null
+        # Disable TLS certificate verification.
       skip_verify: null
     cookie:
+        # Configures the secret key used to sign authentication cookies. If unset,
+        # a random value is generated each time the server is started.
       secret: null
+        # Configures the authentication cookie expiration. This value is optional,
+        # with a default value of 30 days (720h).
       timeout: null
     cron:
+        # Disable the cron scheduler.
       disabled: null
+        # Configures the interval at which the cron scheduler is run. 1h by default.
       interval: null
     database:
+        # Configures the database connection string. The default value is the path
+        # of the embedded sqlite database file.
       datasource: null
+        # Configures the database driver name. The default value is the sqlite3 driver.
+        # Alternate drivers are postgres and mysql.
       driver: null
+        # Set the maximum number of open DB connections from Drone.
+        # It is set to 0 by default and must be configured
+        # **before** the system is first used.
       max_connections: null
+        # Configures the secret key used to encrypt secrets in the database.
+        # Encryption is disabled by default and must be configured
+        # **before** the system is first used.
       secret: null
     git:
+        # Configures Drone to authenticate when cloning public repositories.
       always_auth: null
+        # Overrides the default git username and password used to authenticate and
+        # clone private repositories.
       password: null
       username: null
+      # Gitea (OAuth) config
     gitea:
       client_id: null
       client_secret: null
       server: null
       skip_verify: null
+      # Gitee (OAuth) config
     gitee:
       redirect_url: null
       scope: null
       skip_verify: null
+      # GitHub (OAuth) config
     github:
       client_id: null
       client_secret: null
       scope: null
       server: null
       skip_verify: null
+      # GitLab (OAuth) config
     gitlab:
       client_id: null
       client_secret: null
       server: null
       skip_verify: null
+      # Gogs server config
     gogs:
       server: null
       skip_verify: null
+      # Automatically convert configuration files ending in .jsonnet to yaml.
+      # This is disabled by default and should only be enabled
+      # in trusted environments.
     jsonnet_enabled: null
+      # Filepath of the Drone Enterprise license key. This is used to unlock
+      # the Drone Enterprise edition.
     license: null
     logs:
       color: null
@@ -70,49 +120,99 @@ drone:
       pretty: null
       text: null
       trace: null
+      # Configures the Prometheus metrics endpoint to allow anonymous access.
+      # This is disabled by default and requires authentication token to access
+      # the metrics endpoint.
     prometheus_anonymous_access: null
+      # Disables open registration. If enabled, a system administrator must create
+      # user accounts before the user can login.
     registration_closed: null
+      # List of accounts used to limit which repositories are syncronized between
+      # your source control management system and Drone.
+      # Note that this variable must be set **before** your first login.
     repository_filter: null
+      # Required Drone shared secret.
     rpc_secret: null
+      # S3-compatible storage configuration
     s3:
       bucket: null
       endpoint: null
       path_style: null
       prefix: null
     server:
+        # Required. Configures the user-facing hostname.
+        # This value is used to create webhooks and redirect urls.
       host: null
+        # Required. Configures the user-facing protocol.
+        # This value is used to create webhooks and redirect urls.
       proto: null
+        # Create webhooks that are routed through an alternate proxy server.
+        # The target use case for this setting is when your server is behind a
+        # firewall and you need GitHub webhooks to route through a public proxy.
       proxy_host: null
       proxy_proto: null
     starlark:
+        # Configures Drone to automatically execute files ending in .star to provide
+        # your pipeline configurations. This is disabled by default.
       enabled: null
+        # Sets the maximum number of steps that a starlark configuration can generate.
+        # The default is 50000.
       step_limit: null
+      # Bitbucket Server configuration
     stash:
       consumer_key: null
       private_key: null
       server: null
       skip_verify: null
     status:
+        # Disables the system from using the status API to communicate build state
+        # to the source control management system.
       disabled: null
+        # Configures the status name used to communicate build state to the source
+        # control management system. The default value is `continuous-integration/drone`.
       name: null
     tls:
+        # Automatically generates an SSL certificate using Lets Encrypt, and configures
+        # the server to accept HTTPS requests.
       autocert: null
+        # Path to an SSL certificate used by the server to accept HTTPS requests.
+        # Please note that the cert file should be the concatenation of the server’s
+        # certificate, any intermediates, and the certificate authority’s certificate.
       cert: null
       key: null
     user:
+        # Optional user account that should be created on startup. This should be
+        # used to seed the system with an administrative account. It can be a real
+        # account (i.e. a real GitHub user) or it can be a machine account.
+        # Providing a token is required for machine accounts, and must be 32 bytes.
+        # Generate it with `openssl rand -hex 16`.
+        # Example:
+        # username:octocat,machine:false,admin:true,token:55f24eb3d61ef6ac5e83d550178638dc
       create: null
+        # List of accounts. Registration is limited to users in this list, or users
+        # that are members of organizations included in this list.
       filter: null
     validate_plugin:
+        # Endpoint for the validation plugin, used to enforce custom linting rules
+        # for your pipeline configuration.
       endpoint: null
       secret: null
       skip_verify: null
     webhook:
+        # List of webhook endpoints to which global system events are delivered.
       endpoint: null
+        # List of events and actions that trigger webhooks. If unset all events and
+        # actions trigger webhooks. Available <event_type>:<event_action> strings:
+        # user:{created,updated,deleted}, repo:{enabled,disabled,updated},
+        # build:{created,updated}
       events: null
       secret: null
       skip_verify: null
   container:
+      # Host portion of the container listening port mapping.
     listen: 4803
+      # When the container is configured to speak HTTPS, host portion of the
+      # container listening port mapping for HTTPS.
     listen_https: 4804
 
   lookup:
