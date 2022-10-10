@@ -71,3 +71,15 @@ Drone is installed:
     - require:
       - user: {{ drone.lookup.user.name }}
 {%- endif %}
+
+{%- if drone.install.autoupdate_service is not none %}
+
+Podman autoupdate service is managed for Drone:
+{%-   if drone.install.rootless %}
+  compose.systemd_service_{{ "enabled" if drone.install.autoupdate_service else "disabled" }}:
+    - user: {{ drone.lookup.user.name }}
+{%-   else %}
+  service.{{ "enabled" if drone.install.autoupdate_service else "disabled" }}:
+{%-   endif %}
+    - name: podman-auto-update.timer
+{%- endif %}

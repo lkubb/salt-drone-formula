@@ -10,6 +10,10 @@ services:
 {%- endif %}
     env_file:
       - {{ drone.lookup.paths.config_drone }}
+{%- if drone.install.autoupdate %}
+    labels:
+      - io.containers.autoupdate=registry
+{%- endif %}
     volumes:
       - {{ drone.lookup.paths.data or "drone_data" }}:/data
 
