@@ -51,7 +51,7 @@ Drone compose file is absent:
 
 Drone podman API is unavailable:
   compose.systemd_service_dead:
-    - name: podman
+    - name: podman.socket
     - user: {{ drone.lookup.user.name }}
     - onlyif:
       - fun: user.info
@@ -59,7 +59,7 @@ Drone podman API is unavailable:
 
 Drone podman API is disabled:
   compose.systemd_service_disabled:
-    - name: podman
+    - name: podman.socket
     - user: {{ drone.lookup.user.name }}
     - onlyif:
       - fun: user.info

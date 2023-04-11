@@ -38,14 +38,14 @@ Drone paths are present:
 
 Drone podman API is enabled:
   compose.systemd_service_enabled:
-    - name: podman
+    - name: podman.socket
     - user: {{ drone.lookup.user.name }}
     - require:
       - Drone user session is initialized at boot
 
 Drone podman API is available:
   compose.systemd_service_running:
-    - name: podman
+    - name: podman.socket
     - user: {{ drone.lookup.user.name }}
     - require:
       - Drone user session is initialized at boot
