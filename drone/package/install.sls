@@ -2,7 +2,7 @@
 
 {%- set tplroot = tpldir.split("/")[0] %}
 {%- from tplroot ~ "/map.jinja" import mapdata as drone with context %}
-{%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
+{%- from tplroot ~ "/libtofsstack.jinja" import files_switch with context %}
 
 Drone user account is present:
   user.present:
@@ -54,8 +54,10 @@ Drone podman API is available:
 Drone compose file is managed:
   file.managed:
     - name: {{ drone.lookup.paths.compose }}
-    - source: {{ files_switch(["docker-compose.yml", "docker-compose.yml.j2"],
-                              lookup="Drone compose file is present"
+    - source: {{ files_switch(
+                    ["docker-compose.yml", "docker-compose.yml.j2"],
+                    config=drone,
+                    lookup="Drone compose file is present",
                  )
               }}
     - mode: '0644'
