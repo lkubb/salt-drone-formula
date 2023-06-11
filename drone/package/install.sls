@@ -63,7 +63,7 @@ Drone compose file is managed:
     - mode: '0644'
     - user: root
     - group: {{ drone.lookup.rootgroup }}
-    - makedirs: True
+    - makedirs: true
     - template: jinja
     - makedirs: true
     - context:
