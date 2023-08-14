@@ -15,7 +15,7 @@ services:
       - io.containers.autoupdate=registry
 {%- endif %}
     volumes:
-      - {{ drone.lookup.paths.data or "drone_data" }}:/data
+      - {{ drone.lookup.paths.data or "drone_data" }}:/data{%- if drone.lookup.paths.data %}:Z{%- endif %}
 
 {%- if not drone.lookup.paths.data %}
 
