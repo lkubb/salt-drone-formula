@@ -150,6 +150,8 @@ values:
   container:
     listen: 4803
     listen_https: 4804
+  firewall:
+    manage: false
   map_jinja:
     sources:
     - Y:G@osarch

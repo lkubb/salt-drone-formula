@@ -160,6 +160,9 @@
         "container": {
           "listen": 4803,
           "listen_https": 4804
+        },
+        "firewall": {
+          "manage": false
         }
       },
       "_template": "https://github.com/lkubb/salt-template-formula-compose"

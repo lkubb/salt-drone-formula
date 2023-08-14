@@ -148,6 +148,8 @@ drone:
   container:
     listen: 4803
     listen_https: 4804
+  firewall:
+    manage: false
 
   tofs:
     # The files_switch key serves as a selector for alternative

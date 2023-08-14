@@ -220,7 +220,10 @@ drone:
       # When the container is configured to speak HTTPS, host portion of the
       # container listening port mapping for HTTPS.
     listen_https: 4804
-
+    # On RedHat family systems, this formula can automatically open the
+    # Drone server port. Defaults to false.
+  firewall:
+    manage: false
   lookup:
     rootgroup: root
     compose:

@@ -34,3 +34,22 @@ Drone service is running:
 {%- endif %}
     - watch:
       - Drone is installed
+
+{%- if drone.firewall.manage and grains["os_family"] == "RedHat" %}
+
+Drone service is known:
+  firewalld.service:
+    - name: drone
+    - ports:
+      - {{ drone.container.listen_https if drone | traverse("config:tls:key") else drone.container.listen }}/tcp
+    - require:
+      - Drone service is running
+
+Drone ports are open:
+  firewalld.present:
+    - name: public
+    - services:
+      - drone
+    - require:
+      - Drone service is known
+{%- endif %}
