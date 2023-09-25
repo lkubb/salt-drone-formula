@@ -34,6 +34,7 @@ Drone service is running:
 {%- endif %}
     - watch:
       - Drone is installed
+      - sls: {{ sls_config_file }}
 
 {%- if drone.firewall.manage and grains["os_family"] == "RedHat" %}
 

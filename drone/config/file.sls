@@ -26,7 +26,7 @@ Drone environment files are managed:
     - template: jinja
     - require:
       - user: {{ drone.lookup.user.name }}
-    - watch_in:
+    - require_in:
       - Drone is installed
     - context:
         drone: {{ drone | json }}
